@@ -50,7 +50,7 @@ def init(
     typer.echo("Initializing the archiver...")
     if SETTINGS_KEY in current_config:
         typer.confirm(
-            "Are you sure you want to overwrite existing configuration?", abort=True
+            f"Are you sure you want to overwrite existing configuration at {str(config_path)}?", abort=True
         )
     new_config = configparser.ConfigParser()
     new_config[SETTINGS_KEY] = {
@@ -62,7 +62,7 @@ def init(
     with open(config_path, mode="w") as f:
         new_config.write(f)
 
-    typer.echo(typer.style("Config file written", fg=typer.colors.GREEN))
+    typer.echo(typer.style(f"Config file written to {str(config_path)}", fg=typer.colors.GREEN))
 
 
 @app.command()
