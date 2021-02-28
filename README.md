@@ -80,13 +80,12 @@ Configuration:
 
 - Built with [typer](https://typer.tiangolo.com/). Thanks to it, I only write code and have messages, colors and everything else, for cheap.
 
-- Package management with [poetry](https://python-poetry.org) - follow the installation guide before running the commands listed.
+- Package management with [poetry](https://python-poetry.org) - follow the [installation guide](https://python-poetry.org/docs/#installation) before running the commands listed.
 
 `poetry shell && poetry install` - this installs all depencies as well as the script as defined in the [pyproject.toml](pyproject.toml).
 
 
 ## Installation
-- clone the repo
 
 To install globally/user,
 - create a wheel file: `poetry build`
