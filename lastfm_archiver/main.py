@@ -1,9 +1,10 @@
 import configparser
 import typer
 from datetime import datetime
+from datetime import datetime
 from pathlib import Path
 
-from runner import get_year, write_json
+from lastfm_archiver.runner import get_year, write_json
 
 APP_NAME = "lastfm-archiver"
 METADATA_KEY = "METADATA"
@@ -51,17 +52,17 @@ def init(
         typer.confirm(
             "Are you sure you want to overwrite existing configuration?", abort=True
         )
-    current_config[SETTINGS_KEY] = {
+    new_config = configparser.ConfigParser()
+    new_config[SETTINGS_KEY] = {
         "username": username,
         "api_key": api_key,
         "archive_path": archive_path,
         "earliest_year": earliest_year,
     }
     with open(config_path, mode="w") as f:
-        current_config.write(f)
+        new_config.write(f)
 
-    success = typer.style("Config file written", fg=typer.colors.GREEN)
-    typer.echo(success)
+    typer.echo(typer.style("Config file written", fg=typer.colors.GREEN))
 
 
 @app.command()
@@ -70,8 +71,9 @@ def run():
     Run archiving job. Will fetch all years, skipping already archived years.
     Scrobbles for current year will be merged into the json archive for the current year.
     """
-
+    start_time = datetime.now()
     if SETTINGS_KEY in current_config:
+        typer.echo(typer.style("starting run...", fg=typer.colors.YELLOW))
         settings = current_config[SETTINGS_KEY]
         earliest_year = int(settings["earliest_year"])
         username = settings["username"]
@@ -87,7 +89,7 @@ def run():
         with typer.progressbar(range(earliest_year, current_year + 1)) as years:
             for year in years:
                 y_str = str(year)
-                if y_str in meta and meta[y_str] == "1" and year is not current_year:
+                if y_str in meta and meta[y_str] is "1" and year is not current_year:
                     continue
                 year_scrobbles = get_year(year=year, username=username, api_key=api_key)
                 p = Path(archive_path) / f"{year}.json"
@@ -98,13 +100,20 @@ def run():
                 current_config[METADATA_KEY] = dict(meta)
                 with open(config_path, mode="w") as f:
                     current_config.write(f)
-    else:
-        error = typer.style(
-            "archiver has not been initialized.",
-            fg=typer.colors.WHITE,
-            bg=typer.colors.RED,
+        typer.echo(
+            typer.style(
+                f"🚀 updated in {(datetime.now() - start_time).total_seconds()}s 🚀",
+                fg=typer.colors.GREEN,
+            )
         )
-        typer.echo(error)
+    else:
+        typer.echo(
+            typer.style(
+                "archiver has not been initialized.",
+                fg=typer.colors.WHITE,
+                bg=typer.colors.RED,
+            )
+        )
         typer.Exit(code=1)
 
 
