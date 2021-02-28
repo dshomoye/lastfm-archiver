@@ -9,6 +9,9 @@ It's *your* listening data and, well, what happens if/when LastFM goes away?
 
 This requires a LastFM api_key, you can request one [here](https://www.last.fm/api/authentication). Naturally, a LastFM account is required.
 
+> Not currently available on PyPi, read below [for installation](#Development)
+
+
 ---
 
 ## Usage
@@ -77,7 +80,14 @@ Configuration:
 
 - Built with [typer](https://typer.tiangolo.com/). Thanks to it, I only write code and have messages, colors and everything else, for cheap.
 
-- Package management with [poetry](https://python-poetry.org)
+- Package management with [poetry](https://python-poetry.org) - follow the installation guide before running the commands listed.
 
-### Getting Started 
 `poetry shell && poetry install` - this installs all depencies as well as the script as defined in the [pyproject.toml](pyproject.toml).
+
+
+## Installation
+- clone the repo
+
+To install globally/user,
+- create a wheel file: `poetry build`
+- The wheel file (in `dist/*.whl`) can be installed using `pip` or better yet [pipx](https://github.com/pipxproject/pipx).
