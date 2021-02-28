@@ -9,7 +9,7 @@ It's *your* listening data and, well, what happens if/when LastFM goes away?
 
 This requires a LastFM api_key, you can request one [here](https://www.last.fm/api/authentication). Naturally, a LastFM account is required.
 
-> Not currently available on PyPi, read below [for installation](#Development)
+> Not currently available on PyPi, install from [releases](https://github.com/dshomoye/lastfm-archiver/releases) or read below [for installation](#Development) after cloning.
 
 
 ---
