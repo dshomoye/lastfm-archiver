@@ -7,6 +7,8 @@ This is a script that creates json archives of [lastfm](https://last.fm) scrobbl
 
 It's *your* listening data and, well, what happens if/when LastFM goes away?
 
+This requires a LastFM api_key, you can request one [here](https://www.last.fm/api/authentication). Naturally, a LastFM account is required.
+
 ---
 
 ## Usage
